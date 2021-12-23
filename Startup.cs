@@ -12,7 +12,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using dotnet_rpg.Services.CharacterService;
+using dotnet_rpg.Data;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+
 namespace dotnet_rpg
 {
     public class Startup
@@ -27,7 +30,8 @@ namespace dotnet_rpg
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddDbContext<DataContext>(options => 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -35,6 +39,7 @@ namespace dotnet_rpg
             });
             services.AddScoped<ICharacterService, CharacterService>();
             services.AddAutoMapper(typeof(Startup));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
