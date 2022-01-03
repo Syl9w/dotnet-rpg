@@ -35,6 +35,11 @@ namespace dotnet_rpg.Controllers
             return Ok(await _characterService.GetCharacterById(id));
         }
 
+        [HttpPost("AddSkill")]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSkills(AddCharacterSkillDto newCharacterSkill){
+            return Ok(await _characterService.AddCharacterSkill(newCharacterSkill));
+        }
+
         [HttpPost]
         public async Task<ActionResult<ServiceResponse<List<AddCharacterDto>>>> AddCharacter(AddCharacterDto c)
         {
